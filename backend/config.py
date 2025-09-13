@@ -11,7 +11,9 @@ class Settings(BaseSettings):
     """
 
     # Model configuration
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+    model_config = SettingsConfigDict(
+        env_file=".env", env_file_encoding="utf-8", extra="ignore"
+    )
 
     # Google Cloud Project ID
     GCP_PROJECT_ID: str

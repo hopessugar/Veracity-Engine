@@ -33,7 +33,9 @@ def is_ip_forbidden(ip_str: str) -> bool:
         ip_addr = ip_address(ip_str)
         for cidr in FORBIDDEN_IP_RANGES:
             if ip_addr in ip_network(cidr):
-                logging.warning(f"Forbidden IP address '{ip_str}' detected in range '{cidr}'.")
+                logging.warning(
+                    f"Forbidden IP address '{ip_str}' detected in range '{cidr}'."
+                )
                 return True
         return False
     except AddressValueError:

@@ -69,7 +69,10 @@ class FactCheckClient:
                 if "claimReview" in claim and claim["claimReview"]:
                     review = claim["claimReview"][0]
                     # Ensure all required fields are present before creating the model
-                    if all(k in review for k in ["publisher", "title", "textualRating", "url"]):
+                    if all(
+                        k in review
+                        for k in ["publisher", "title", "textualRating", "url"]
+                    ):
                         results.append(
                             FactCheckResult(
                                 publisher=review["publisher"]["name"],
@@ -84,7 +87,9 @@ class FactCheckClient:
 
         except requests.exceptions.RequestException as e:
             logging.error(f"Network error calling Fact Check API: {e}")
-            return [] # Return an empty list on network failure to not block the process
+            return (
+                []
+            )  # Return an empty list on network failure to not block the process
         except Exception as e:
             logging.error(f"An unexpected error occurred in FactCheckClient: {e}")
             return []

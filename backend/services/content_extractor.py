@@ -52,7 +52,9 @@ def extract_text_from_url(url: str) -> str | None:
             for chunk in response.iter_content(chunk_size=8192):
                 content += chunk
                 if len(content) > MAX_CONTENT_SIZE_BYTES:
-                    logging.warning(f"Streamed content exceeds size limit for URL: {url}")
+                    logging.warning(
+                        f"Streamed content exceeds size limit for URL: {url}"
+                    )
                     return None
 
             # Use BeautifulSoup to parse HTML and extract text

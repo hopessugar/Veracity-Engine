@@ -13,7 +13,7 @@ from models import GeminiAnalysis
 GEMINI_API_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models"
 DEFAULT_MODEL = "gemini-1.5-flash-latest"
 REQUEST_TIMEOUT_SECONDS = 60  # Increased timeout to 60 seconds
-MAX_CONTENT_CHARS = 30000     # Limit content to ~30k characters to ensure performance
+MAX_CONTENT_CHARS = 30000  # Limit content to ~30k characters to ensure performance
 
 # (The SYSTEM_PROMPT remains the same as before)
 SYSTEM_PROMPT = """
@@ -38,10 +38,13 @@ The possible flags are:
 Analyze the following text and provide your response in the specified JSON format.
 """
 
+
 class GeminiClient:
     """A client for interacting with the Google Gemini Pro API."""
 
-    def __init__(self, api_key: str = settings.GEMINI_API_KEY, model: str = DEFAULT_MODEL):
+    def __init__(
+        self, api_key: str = settings.GEMINI_API_KEY, model: str = DEFAULT_MODEL
+    ):
         if not api_key:
             raise ValueError("Gemini API key is not configured.")
         self.api_key = api_key
@@ -51,13 +54,15 @@ class GeminiClient:
     def _create_session(self) -> requests.Session:
         """Creates a requests session with retry logic."""
         session = requests.Session()
-        retries = Retry(total=3, backoff_factor=1, status_forcelist=[500, 502, 503, 504])
+        retries = Retry(
+            total=3, backoff_factor=1, status_forcelist=[500, 502, 503, 504]
+        )
         session.mount("https://", HTTPAdapter(max_retries=retries))
         return session
 
     def _extract_json_from_text(self, text: str) -> str | None:
         """Finds and extracts the first valid JSON object from a string."""
-        match = re.search(r'\{.*\}', text, re.DOTALL)
+        match = re.search(r"\{.*\}", text, re.DOTALL)
         if match:
             return match.group(0)
         return None
@@ -69,19 +74,29 @@ class GeminiClient:
         # NEW: Truncate content to a max length
         truncated_content = text_content[:MAX_CONTENT_CHARS]
 
-        api_url = f"{GEMINI_API_BASE_URL}/{self.model}:generateContent?key={self.api_key}"
+        api_url = (
+            f"{GEMINI_API_BASE_URL}/{self.model}:generateContent?key={self.api_key}"
+        )
         headers = {"Content-Type": "application/json"}
-        payload = {"contents": [{"parts": [{"text": f"{SYSTEM_PROMPT}\n\n---\n\n{truncated_content}"}]}]}
+        payload = {
+            "contents": [
+                {"parts": [{"text": f"{SYSTEM_PROMPT}\n\n---\n\n{truncated_content}"}]}
+            ]
+        }
 
         try:
-            logging.info(f"Sending analysis request to Gemini model: {self.model} with {len(truncated_content)} chars.")
+            logging.info(
+                f"Sending analysis request to Gemini model: {self.model} with {len(truncated_content)} chars."
+            )
             response = self._session.post(
                 api_url, headers=headers, json=payload, timeout=REQUEST_TIMEOUT_SECONDS
             )
             response.raise_for_status()
 
             response_json = response.json()
-            analysis_text = response_json["candidates"][0]["content"]["parts"][0]["text"]
+            analysis_text = response_json["candidates"][0]["content"]["parts"][0][
+                "text"
+            ]
 
             json_string = self._extract_json_from_text(analysis_text)
             if not json_string:

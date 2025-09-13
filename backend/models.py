@@ -47,10 +47,16 @@ class FactCheckResult(BaseModel):
     Represents a single fact-check result from the Google Fact Check Tools API.
     """
 
-    publisher: str = Field(..., description="The name of the fact-checking organization.")
+    publisher: str = Field(
+        ..., description="The name of the fact-checking organization."
+    )
     claim: str = Field(..., description="The claim that was reviewed.")
-    rating: str = Field(..., description="The rating given by the publisher, e.g., 'True', 'False'.")
-    review_url: HttpUrl = Field(..., description="A URL to the full fact-check article.")
+    rating: str = Field(
+        ..., description="The rating given by the publisher, e.g., 'True', 'False'."
+    )
+    review_url: HttpUrl = Field(
+        ..., description="A URL to the full fact-check article."
+    )
 
 
 class GeminiAnalysis(BaseModel):
@@ -88,7 +94,9 @@ class AnalysisResponse(BaseModel):
         description="The final calculated credibility score from 0 (low) to 100 (high).",
     )
     verdict: Verdict = Field(..., description="The overall verdict category.")
-    summary: str = Field(..., description="A one-sentence neutral summary of the content.")
+    summary: str = Field(
+        ..., description="A one-sentence neutral summary of the content."
+    )
     flags: list[str] = Field(
         default_factory=list,
         description="A list of flags indicating potential misinformation tactics.",

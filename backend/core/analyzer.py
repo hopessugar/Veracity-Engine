@@ -52,7 +52,9 @@ class Analyzer:
         with ThreadPoolExecutor(max_workers=3) as executor:
             # Submit tasks to the executor
             future_sb = executor.submit(self.safe_browsing_client.check_url, url)
-            future_gemini = executor.submit(self.gemini_client.analyze_content, text_content)
+            future_gemini = executor.submit(
+                self.gemini_client.analyze_content, text_content
+            )
             future_fc = executor.submit(self.fact_check_client.search, url)
 
             # Retrieve results as they complete
@@ -75,7 +77,7 @@ class Analyzer:
 
         # Determine final score and verdict
         final_score = gemini_analysis.credibility_score
-        verdict = Verdict.CAUTION # Default verdict
+        verdict = Verdict.CAUTION  # Default verdict
 
         if sb_result.threat_type != "THREAT_TYPE_UNSPECIFIED":
             final_score = 0
@@ -102,7 +104,9 @@ class Analyzer:
             verdict=Verdict.UNRELIABLE,
             summary=error_message,
             flags=["analysis_failed"],
-            safe_browsing=SafeBrowsingResult(threat_type="API_ERROR", details={"error": error_message}),
+            safe_browsing=SafeBrowsingResult(
+                threat_type="API_ERROR", details={"error": error_message}
+            ),
             fact_checks=[],
             raw_ai_analysis=GeminiAnalysis(
                 credibility_score=0,

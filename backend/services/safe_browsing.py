@@ -81,9 +81,7 @@ class SafeBrowsingClient:
             logging.warning(
                 f"Safe Browsing threat found for {url_to_check}: {threat_type}"
             )
-            return SafeBrowsingResult(
-                threat_type=threat_type, details=threat_match
-            )
+            return SafeBrowsingResult(threat_type=threat_type, details=threat_match)
 
         except requests.exceptions.RequestException as e:
             logging.error(f"Network error calling Safe Browsing API: {e}")

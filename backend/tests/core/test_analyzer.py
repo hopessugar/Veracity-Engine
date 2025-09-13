@@ -18,26 +18,34 @@ def test_successful_analysis(client):
     # CORRECTED: The actual URL passed after Pydantic validation
     normalized_url = "https://example.com/"
 
-    with patch("main.validate_and_resolve_url", return_value=normalized_url) as mock_validate, \
-         patch("core.analyzer.extract_text_from_url", return_value="Sample article text.") as mock_extract, \
-         patch("main.analyzer.safe_browsing_client.check_url") as mock_sb_check, \
-         patch("main.analyzer.gemini_client.analyze_content") as mock_gemini_analyze, \
-         patch("main.analyzer.fact_check_client.search") as mock_fc_search:
+    with (
+        patch(
+            "main.validate_and_resolve_url", return_value=normalized_url
+        ) as mock_validate,
+        patch(
+            "core.analyzer.extract_text_from_url", return_value="Sample article text."
+        ) as mock_extract,
+        patch("main.analyzer.safe_browsing_client.check_url") as mock_sb_check,
+        patch("main.analyzer.gemini_client.analyze_content") as mock_gemini_analyze,
+        patch("main.analyzer.fact_check_client.search") as mock_fc_search,
+    ):
 
         # Configure the return values of our mocks
-        mock_sb_check.return_value = SafeBrowsingResult(threat_type="THREAT_TYPE_UNSPECIFIED")
+        mock_sb_check.return_value = SafeBrowsingResult(
+            threat_type="THREAT_TYPE_UNSPECIFIED"
+        )
         mock_gemini_analyze.return_value = GeminiAnalysis(
             credibility_score=85,
             summary="This is a neutral summary.",
             detected_flags=["no_trusted_sources"],
-            reasoning="The analysis was positive."
+            reasoning="The analysis was positive.",
         )
         mock_fc_search.return_value = [
             FactCheckResult(
                 publisher="FactCheck.org",
                 claim="A sample claim.",
                 rating="True",
-                review_url="https://factcheck.org/review/"
+                review_url="https://factcheck.org/review/",
             )
         ]
 
