@@ -1,3 +1,4 @@
+# --- FILE: backend/pyproject.toml ---
 # pyproject.toml
 
 [tool.black]
@@ -31,3 +32,4 @@ addopts = "-v --cov=."
 testpaths = [
     "tests",
 ]
+pythonpath = ["."] # <--- ADD THIS LINE

@@ -11,6 +11,9 @@ requests==2.32.3
 
 # Data validation and settings management
 pydantic==2.7.4
+# Data validation and settings management
+pydantic==2.7.4
+pydantic-settings==2.3.4
 python-dotenv==1.0.1
 
 # Google Cloud specific
