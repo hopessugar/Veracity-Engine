@@ -1,0 +1,28 @@
+# ====== Application Dependencies ======
+# These packages are required for the application to run in production.
+
+# Web framework and server
+Flask==3.0.3
+gunicorn==22.0.0
+functions-framework==3.5.0
+
+# HTTP requests to external APIs
+requests==2.32.3
+
+# Data validation and settings management
+pydantic==2.7.4
+python-dotenv==1.0.1
+
+# Google Cloud specific
+google-cloud-logging==3.9.0
+
+# Web content parsing
+beautifulsoup4==4.12.3
+
+# ====== Development & Testing Dependencies ======
+# These packages are used for testing, linting, and formatting.
+
+pytest==8.2.2
+pytest-cov==5.0.0
+black==24.4.2
+ruff==0.4.10

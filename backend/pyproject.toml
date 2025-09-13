@@ -1,0 +1,33 @@
+# pyproject.toml
+
+[tool.black]
+# The uncompromising code formatter
+line-length = 88
+target-version = ['py311']
+
+[tool.ruff]
+# The extremely fast linter and code formatter
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+# Select the rule sets to enable.
+# "E", "F": Standard pycodestyle and Pyflakes rules (essential)
+# "W": Pycodestyle warnings
+# "I": Isort (import sorting)
+# "N": Naming conventions
+# "UP": Pyupgrade (modernize code)
+# For a full list, see: https://docs.astral.sh/ruff/rules/
+select = ["E", "F", "W", "I", "N", "UP"]
+
+# Ignore specific rules if needed.
+# For example, E501 (line too long) is already handled by black.
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+# Configuration for our testing framework
+minversion = "6.0"
+addopts = "-v --cov=."
+testpaths = [
+    "tests",
+]
