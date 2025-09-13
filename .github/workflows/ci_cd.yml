@@ -35,6 +35,11 @@ jobs:
         run: black --check .
 
       - name: Run Pytest tests
+        # THIS IS THE FIX: We add the secrets to the test environment
+        env:
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
         run: pytest
 
   deploy:
