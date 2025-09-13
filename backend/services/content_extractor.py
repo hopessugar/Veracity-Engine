@@ -1,4 +1,5 @@
 import logging
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -53,7 +54,7 @@ def extract_text_from_url(url: str) -> str | None:
                 if len(content) > MAX_CONTENT_SIZE_BYTES:
                     logging.warning(f"Streamed content exceeds size limit for URL: {url}")
                     return None
-            
+
             # Use BeautifulSoup to parse HTML and extract text
             soup = BeautifulSoup(content, "html.parser")
 
@@ -65,7 +66,7 @@ def extract_text_from_url(url: str) -> str | None:
             body = soup.body
             if not body:
                 return None
-            
+
             text = body.get_text(separator=" ", strip=True)
             return text
 

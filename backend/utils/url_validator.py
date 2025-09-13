@@ -1,6 +1,6 @@
 import logging
 import socket
-from ipaddress import ip_address, AddressValueError
+from ipaddress import AddressValueError, ip_address
 from urllib.parse import urlparse
 
 # A set of common private/reserved IP address ranges to block for SSRF protection.

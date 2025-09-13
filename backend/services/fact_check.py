@@ -1,5 +1,5 @@
 import logging
-from typing import List
+
 import requests
 from requests.adapters import HTTPAdapter, Retry
 
@@ -31,7 +31,7 @@ class FactCheckClient:
         session.mount("https://", HTTPAdapter(max_retries=retries))
         return session
 
-    def search(self, query: str, max_results: int = 5) -> List[FactCheckResult]:
+    def search(self, query: str, max_results: int = 5) -> list[FactCheckResult]:
         """
         Searches for fact checks related to a query.
 
@@ -58,7 +58,7 @@ class FactCheckClient:
 
             response_json = response.json()
             claims = response_json.get("claims", [])
-            
+
             if not claims:
                 logging.info(f"No fact checks found for query: '{query[:50]}...'")
                 return []
@@ -78,7 +78,7 @@ class FactCheckClient:
                                 review_url=review["url"],
                             )
                         )
-            
+
             logging.info(f"Found {len(results)} fact checks for query.")
             return results
 

@@ -3,6 +3,7 @@ import socket
 from unittest.mock import patch
 
 import pytest
+
 from utils.url_validator import validate_and_resolve_url
 
 

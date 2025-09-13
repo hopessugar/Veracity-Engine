@@ -1,6 +1,7 @@
 # --- FILE: backend/core/analyzer.py ---
 import logging
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor
+
 from models import (
     AnalysisResponse,
     FactCheckResult,
@@ -8,10 +9,10 @@ from models import (
     SafeBrowsingResult,
     Verdict,
 )
+from services.content_extractor import extract_text_from_url
 from services.fact_check import FactCheckClient
 from services.gemini_client import GeminiClient
 from services.safe_browsing import SafeBrowsingClient
-from services.content_extractor import extract_text_from_url
 
 
 class Analyzer:
@@ -63,7 +64,7 @@ class Analyzer:
         return self._build_final_response(
             safe_browsing_result, gemini_analysis, fact_check_results
         )
-        
+
     def _build_final_response(
         self,
         sb_result: SafeBrowsingResult,
@@ -71,11 +72,11 @@ class Analyzer:
         fc_results: list[FactCheckResult],
     ) -> AnalysisResponse:
         """Combines individual service results into the final API response."""
-        
+
         # Determine final score and verdict
         final_score = gemini_analysis.credibility_score
         verdict = Verdict.CAUTION # Default verdict
-        
+
         if sb_result.threat_type != "THREAT_TYPE_UNSPECIFIED":
             final_score = 0
             verdict = Verdict.DANGER
@@ -83,7 +84,7 @@ class Analyzer:
             verdict = Verdict.VERIFIED
         elif final_score <= 40:
             verdict = Verdict.UNRELIABLE
-            
+
         return AnalysisResponse(
             veracity_score=final_score,
             verdict=verdict,

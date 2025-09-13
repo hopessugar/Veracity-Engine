@@ -1,5 +1,4 @@
 # --- FILE: backend/tests/core/test_analyzer.py ---
-import pytest
 from unittest.mock import patch
 
 from models import (
@@ -8,6 +7,7 @@ from models import (
     SafeBrowsingResult,
     Verdict,
 )
+
 
 # The 'client' fixture is automatically provided by conftest.py
 def test_successful_analysis(client):

@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Any, Dict, List
+from typing import Any
 
 from pydantic import BaseModel, Field, HttpUrl
 
@@ -37,7 +37,7 @@ class SafeBrowsingResult(BaseModel):
         ...,
         description="The type of threat found, e.g., 'MALWARE', 'SOCIAL_ENGINEERING', or 'THREAT_TYPE_UNSPECIFIED'.",
     )
-    details: Dict[str, Any] = Field(
+    details: dict[str, Any] = Field(
         default_factory=dict, description="Additional details provided by the API."
     )
 
@@ -67,7 +67,7 @@ class GeminiAnalysis(BaseModel):
     summary: str = Field(
         ..., description="The AI-generated one-sentence neutral summary."
     )
-    detected_flags: List[str] = Field(
+    detected_flags: list[str] = Field(
         default_factory=list,
         description="A list of potential misinformation flags, e.g., 'emotionally_charged'.",
     )
@@ -89,12 +89,12 @@ class AnalysisResponse(BaseModel):
     )
     verdict: Verdict = Field(..., description="The overall verdict category.")
     summary: str = Field(..., description="A one-sentence neutral summary of the content.")
-    flags: List[str] = Field(
+    flags: list[str] = Field(
         default_factory=list,
         description="A list of flags indicating potential misinformation tactics.",
     )
 
     # Detailed breakdown from integrated services
     safe_browsing: SafeBrowsingResult
-    fact_checks: List[FactCheckResult]
+    fact_checks: list[FactCheckResult]
     raw_ai_analysis: GeminiAnalysis

@@ -1,10 +1,10 @@
 # --- FILE: backend/main.py ---
 import logging
-from flask import Flask, jsonify, request, Response
+
+from flask import Flask, Response, jsonify
 from flask_cors import CORS
 from pydantic import ValidationError
 
-from config import settings
 from core.analyzer import Analyzer
 from models import AnalysisRequest
 from utils.logging_config import setup_logging
