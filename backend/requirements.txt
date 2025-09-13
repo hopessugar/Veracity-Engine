@@ -1,6 +1,6 @@
 # ====== Application Dependencies ======
 # These packages are required for the application to run in production.
-
+Flask-Cors==4.0.1
 # Web framework and server
 Flask==3.0.3
 gunicorn==22.0.0

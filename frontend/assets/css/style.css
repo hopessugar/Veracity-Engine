@@ -1,0 +1,212 @@
+/* --- FILE: frontend/assets/css/style.css --- */
+
+/* 1. Imports and Variables */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+:root {
+    --font-family: 'Roboto', sans-serif;
+    --color-background: #F8F9FA;
+    --color-text: #202124;
+    --color-text-light: #5f6368;
+    --color-primary: #1A73E8;
+    --color-white: #FFFFFF;
+    --color-border: #DADCE0;
+
+    --color-verified: #1E8E3E;
+    --color-caution: #F9AB00;
+    --color-unreliable: #E8710A;
+    --color-danger: #D93025;
+
+    --shadow-small: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+    --shadow-medium: 0 4px 6px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+}
+
+/* 2. Global Styles & Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
+/* 3. Layout */
+header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+main {
+    width: 100%;
+    max-width: 700px;
+}
+
+.input-container {
+    background-color: var(--color-white);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow-small);
+    text-align: center;
+}
+
+/* 4. Input Form */
+.input-container h2 {
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    color: var(--color-text-light);
+}
+
+.input-form {
+    display: flex;
+    gap: 0.5rem;
+}
+
+#url-input {
+    flex-grow: 1;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    outline: none;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+#url-input:focus {
+    box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+#analyze-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    min-width: 120px;
+}
+
+#analyze-btn:hover {
+    background-color: #185ABC;
+}
+
+#analyze-btn .loader {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 5. Loading & Results Sections */
+#loading-section {
+    margin-top: 2rem;
+    text-align: center;
+    color: var(--color-text-light);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background-color: var(--color-border);
+    border-radius: 2px;
+    margin-top: 1rem;
+    overflow: hidden;
+}
+
+.progress-bar-inner {
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-primary);
+    animation: progress-indeterminate 2s infinite linear;
+}
+
+@keyframes progress-indeterminate {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+#results-section {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.results-card {
+    background-color: var(--color-white);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow-small);
+}
+
+.verdict-card {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.score-gauge {
+    font-size: 3rem;
+    font-weight: 700;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 8px solid var(--color-border);
+}
+
+.verdict-text {
+    font-size: 2rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.summary-card h3, .flags-card h3 {
+    margin-bottom: 1rem;
+    font-weight: 500;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 0.5rem;
+}
+
+.flags-list {
+    list-style: none;
+    padding: 0;
+}
+
+.flags-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-light);
+}
+
+/* 6. Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+/* Verdict-specific colors */
+.verified { color: var(--color-verified); }
+.caution { color: var(--color-caution); }
+.unreliable { color: var(--color-unreliable); }
+.danger { color: var(--color-danger); }
