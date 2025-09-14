@@ -63,7 +63,7 @@ gcloud functions deploy "$FUNCTION_NAME" \
   --region="$REGION" \
   --runtime=python311 \
   --source=./backend \
-  --entry-point=veracity_engine_api \
+  --entry-point=app \
   --trigger-http \
   --allow-unauthenticated \
   --set-env-vars="APP_ENV=production,LOG_LEVEL=INFO,GCP_PROJECT_ID=$GCP_PROJECT_ID" \
