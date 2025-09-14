@@ -1,10 +1,10 @@
 # --- FILE: backend/main.py ---
 import logging
-from flask import Flask, jsonify, request, Response
+
+from flask import Flask, Response, jsonify, request
 from flask_cors import CORS
 from pydantic import ValidationError
 
-from config import settings
 from core.analyzer import Analyzer
 from models import AnalysisRequest
 from utils.logging_config import setup_logging
@@ -29,7 +29,12 @@ def veracity_engine_api():
         return "", 204
 
     if not request.is_json:
-        return jsonify({"error": "Invalid request: Content-Type must be application/json"}), 415
+        return (
+            jsonify(
+                {"error": "Invalid request: Content-Type must be application/json"}
+            ),
+            415,
+        )
 
     try:
         request_data = AnalysisRequest.model_validate(request.get_json())
